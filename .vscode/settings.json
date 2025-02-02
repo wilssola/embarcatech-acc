@@ -43,6 +43,9 @@
         "pin.h": "c",
         "button.h": "c",
         "timer.h": "c",
-        "led.h": "c"
+        "led.h": "c",
+        "stdlib.h": "c",
+        "multicore.h": "c",
+        "gpio.h": "c"
     }
 }
