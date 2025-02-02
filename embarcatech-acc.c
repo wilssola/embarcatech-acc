@@ -1,8 +1,4 @@
-#include <stdio.h>
-
-#include "pico/stdlib.h"
 #include "pico/multicore.h"
-#include "hardware/gpio.h"
 #include "ws2812.pio.h"
 
 #include "include/pin.h"
