@@ -45,20 +45,30 @@ void ws2812_draw() {
     }
 }
 
+// Função para limpar a matriz de LEDs WS2812
+void ws2812_clear() {
+    for (uint8_t y = 0; y < MATRIX_HEIGHT; y++) {
+        for (uint8_t x = 0; x < MATRIX_WIDTH; x++) {
+            ws2812_set_pixel(x, y, 0x000000); // Apaga o pixel
+        }
+    }
+}
+
 // Função para exibir o número na matriz de LEDs WS2812
 void display_number(uint8_t num) {
     // Cores para cada número de 0 a 9
+    // Seguindo a ordem do espectro visível de luz
     uint32_t colors[] = {
         0xFF0000, // Vermelho para 0
-        0x00FF00, // Verde para 1
-        0x0000FF, // Azul para 2
-        0xFFFF00, // Amarelo para 3
-        0xFF00FF, // Magenta para 4
+        0xFF7F00, // Laranja para 1
+        0xFFFF00, // Amarelo para 2
+        0x00FF00, // Verde para 3
+        0x00FF7F, // Verde claro para 4
         0x00FFFF, // Ciano para 5
-        0xFFFFFF, // Branco para 6
-        0xFF8000, // Laranja para 7
-        0x8000FF, // Roxo para 8
-        0x0080FF  // Azul claro para 9
+        0x007FFF, // Azul claro para 6
+        0x0000FF, // Azul para 7
+        0x4B0082, // Anil para 8
+        0x8B00FF  // Violeta para 9
     };
 
     // Padrões de LEDs para cada número de 0 a 9
@@ -75,7 +85,7 @@ void display_number(uint8_t num) {
         {
             {0, 0, 1, 0, 0},
             {0, 1, 1, 0, 0},
-            {1, 0, 1, 0, 0},
+            {0, 0, 1, 0, 1},
             {0, 0, 1, 0, 0},
             {1, 1, 1, 1, 1}
         },
@@ -101,7 +111,7 @@ void display_number(uint8_t num) {
             {1, 0, 0, 0, 1},
             {1, 1, 1, 1, 1},
             {0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 1}
+            {1, 0, 0, 0, 0}
         },
         // 5
         {
@@ -123,9 +133,9 @@ void display_number(uint8_t num) {
         {
             {1, 1, 1, 1, 1},
             {0, 0, 0, 0, 1},
+            {1, 0, 0, 0, 0},
             {0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 1},
-            {0, 0, 0, 0, 1}
+            {1, 0, 0, 0, 0}
         },
         // 8
         {
@@ -148,11 +158,7 @@ void display_number(uint8_t num) {
     uint32_t color = colors[num];
 
     // Limpa a matriz
-    for (uint8_t y = 0; y < MATRIX_HEIGHT; y++) {
-        for (uint8_t x = 0; x < MATRIX_WIDTH; x++) {
-            ws2812_set_pixel(x, y, 0x000000); // Apaga o pixel
-        }
-    }
+    ws2812_clear();
 
     // Define os LEDs para o número
     for (uint8_t y = 0; y < MATRIX_HEIGHT; y++) {

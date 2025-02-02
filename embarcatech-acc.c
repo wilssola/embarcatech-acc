@@ -9,7 +9,12 @@
 #include "include/button.h"
 #include "include/ws2812.h"
 
-volatile uint8_t number = 0;
+volatile uint8_t led = MIN_LED;
+
+#define MIN_NUMBER 0
+#define MAX_NUMBER 9
+
+volatile uint8_t number = MIN_NUMBER;
 
 // Função para inicializar o LED RGB
 void led_init() {    
@@ -57,23 +62,41 @@ int main() {
     ws2812_init();
 
     while (true) {
-        blink_led();
+        blink_led(led);
+
+        if (button_a_pressed && button_b_pressed) {
+            button_a_pressed = false;
+            button_b_pressed = false;
+            
+            number = 0;
+
+            if (led < MAX_LED) {
+                led++;
+            } else {
+                led = MIN_LED;
+            }
+
+            ws2812_clear();
+            ws2812_draw();
+        }
 
         // Verifica se o botão A foi pressionado
         if (button_a_pressed) {
             button_a_pressed = false;
-            if (number < 9) {
-                number++;
+            if (number > MIN_NUMBER) {
+                number--;
             }
+            
             display_number(number);
         }
 
         // Verifica se o botão B foi pressionado
         if (button_b_pressed) {
             button_b_pressed = false;
-            if (number > 0) {
-                number--;
+            if (number < MAX_NUMBER) {
+                number++;
             }
+
             display_number(number);
         }
     }
