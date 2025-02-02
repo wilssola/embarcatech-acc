@@ -60,7 +60,26 @@ void switch_led() {
     
     // Reiniciar o núcleo 1 para atualizar a cor do LED
     multicore_reset_core1();
+
+    // Iniciar o núcleo 1 para piscar o LED com a nova cor
     multicore_launch_core1(core1_entry);
+}
+
+// Função para verificar se ambos os botões foram pressionados
+void check_both_buttons() {   
+    if (button_a_pressed && button_b_pressed) {
+        button_a_pressed = false;
+        button_b_pressed = false;
+        
+        number = 0;
+
+        switch_led();
+
+        ws2812_clear();
+        ws2812_draw();
+    }
+
+    sleep_ms(20);
 }
 
 int main() {
@@ -79,20 +98,6 @@ int main() {
     multicore_launch_core1(core1_entry);
 
     while (true) {
-        if (button_a_pressed && button_b_pressed) {
-            button_a_pressed = false;
-            button_b_pressed = false;
-            
-            number = 0;
-
-            switch_led();
-
-            ws2812_clear();
-            ws2812_draw();
-        }
-
-        sleep_ms(50);
-
         // Verifica se o botão A foi pressionado
         if (button_a_pressed && !button_b_pressed) {
             button_a_pressed = false;
@@ -103,8 +108,6 @@ int main() {
             display_number(number);
         }
 
-        sleep_ms(50);
-
         // Verifica se o botão B foi pressionado
         if (button_b_pressed && !button_a_pressed) {
             button_b_pressed = false;
@@ -114,5 +117,7 @@ int main() {
 
             display_number(number);
         }
+
+        check_both_buttons();
     }
 }
