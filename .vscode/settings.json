@@ -38,6 +38,11 @@
     "raspberry-pi-pico.ninjaPath": "${HOME}/.pico-sdk/ninja/v1.12.1/ninja",
     "files.associations": {
         "clocks.h": "c",
-        "pio.h": "c"
+        "pio.h": "c",
+        "ws2812.h": "c",
+        "pin.h": "c",
+        "button.h": "c",
+        "timer.h": "c",
+        "led.h": "c"
     }
 }
