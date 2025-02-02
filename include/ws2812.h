@@ -9,13 +9,6 @@
 
 uint32_t led_matrix[MATRIX_HEIGHT][MATRIX_WIDTH];
 
-// Função para definir a cor de um pixel na matriz de LEDs WS2812
-void ws2812_set_pixel(uint8_t x, uint8_t y, uint32_t color) {
-    if (x < MATRIX_WIDTH && y < MATRIX_HEIGHT) {
-        led_matrix[y][x] = color;
-    }
-}
-
 uint32_t adjust_brightness(uint32_t color, float brightness) {
     uint8_t r = (color >> 16) & 0xFF;
     uint8_t g = (color >> 8) & 0xFF;
@@ -26,6 +19,22 @@ uint32_t adjust_brightness(uint32_t color, float brightness) {
     b = (uint8_t)(b * brightness);
 
     return (r << 16) | (g << 8) | b;
+}
+
+// Função para definir a cor de um pixel na matriz de LEDs WS2812
+void ws2812_set_pixel(uint8_t x, uint8_t y, uint32_t color) {
+    if (x < MATRIX_WIDTH && y < MATRIX_HEIGHT) {
+        led_matrix[y][x] = color;
+    }
+}
+
+// Função para limpar a matriz de LEDs WS2812
+void ws2812_clear() {
+    for (uint8_t y = 0; y < MATRIX_HEIGHT; y++) {
+        for (uint8_t x = 0; x < MATRIX_WIDTH; x++) {
+            ws2812_set_pixel(x, y, 0x000000); // Apaga o pixel
+        }
+    }
 }
 
 // Função para atualizar a matriz de LEDs WS2812
@@ -41,15 +50,6 @@ void ws2812_draw() {
 
             // Enviar a cor ajustada para o LED correspondente
             pio_sm_put_blocking(pio0, 0, color << 8u);
-        }
-    }
-}
-
-// Função para limpar a matriz de LEDs WS2812
-void ws2812_clear() {
-    for (uint8_t y = 0; y < MATRIX_HEIGHT; y++) {
-        for (uint8_t x = 0; x < MATRIX_WIDTH; x++) {
-            ws2812_set_pixel(x, y, 0x000000); // Apaga o pixel
         }
     }
 }

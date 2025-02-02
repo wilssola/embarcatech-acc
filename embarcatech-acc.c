@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "pico/stdlib.h"
+#include "pico/multicore.h"
 #include "hardware/gpio.h"
 #include "ws2812.pio.h"
 
@@ -46,6 +47,10 @@ void ws2812_init() {
     ws2812_program_init(pio, sm, offset, WS2812_PIN, 800000, false);
 }
 
+void core1_entry() {
+    blink_led(led);
+}
+
 int main() {
     stdio_init_all();
 
@@ -58,9 +63,10 @@ int main() {
     // Inicializa o controlador WS2812
     ws2812_init();
 
-    while (true) {
-        blink_led(led);
+    // Iniciar o núcleo 1 para piscar o LED
+    multicore_launch_core1(core1_entry);
 
+    while (true) {
         if (button_a_pressed && button_b_pressed) {
             button_a_pressed = false;
             button_b_pressed = false;

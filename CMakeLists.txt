@@ -44,7 +44,7 @@ pico_generate_pio_header(embarcatech-acc ${CMAKE_CURRENT_LIST_DIR}/ws2812.pio OU
 
 target_sources(embarcatech-acc PRIVATE embarcatech-acc.c)
 
-target_link_libraries(embarcatech-acc PRIVATE pico_stdlib hardware_pio)
+target_link_libraries(embarcatech-acc PRIVATE pico_stdlib hardware_pio pico_multicore)
 pico_add_extra_outputs(embarcatech-acc)
 
 # add url via pico_set_program_url

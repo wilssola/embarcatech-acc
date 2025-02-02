@@ -23,7 +23,7 @@ void blink_led(int led_color) {
             break;
     }
 
-    for (int i = 0; i < 5; i++) {
+    while(true) {
         gpio_put(pin, 1);
         sleep_ms(100);
         gpio_put(pin, 0);
