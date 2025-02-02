@@ -6,9 +6,11 @@
 #define MIN_LED 0
 #define MAX_LED 2
 
+extern volatile uint8_t led_color;
+
 // Função para piscar o LED vermelho do LED RGB 5 vezes por segundo
-void blink_led(int led_color) {
-    int pin;
+void blink_led() {
+    uint8_t pin;
 
     switch (led_color) {
         case 2:

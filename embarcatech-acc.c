@@ -10,7 +10,7 @@
 #include "include/button.h"
 #include "include/ws2812.h"
 
-volatile uint8_t led = MIN_LED;
+volatile uint8_t led_color = MIN_LED;
 
 volatile uint8_t number = MIN_NUMBER;
 
@@ -48,7 +48,19 @@ void ws2812_init() {
 }
 
 void core1_entry() {
-    blink_led(led);
+    blink_led();
+}
+
+void switch_led() {
+    if (led_color < MAX_LED) {
+        led_color++;
+    } else {
+        led_color = MIN_LED;
+    }
+    
+    // Reiniciar o núcleo 1 para atualizar a cor do LED
+    multicore_reset_core1();
+    multicore_launch_core1(core1_entry);
 }
 
 int main() {
@@ -73,18 +85,16 @@ int main() {
             
             number = 0;
 
-            if (led < MAX_LED) {
-                led++;
-            } else {
-                led = MIN_LED;
-            }
+            switch_led();
 
             ws2812_clear();
             ws2812_draw();
         }
 
+        sleep_ms(50);
+
         // Verifica se o botão A foi pressionado
-        if (button_a_pressed) {
+        if (button_a_pressed && !button_b_pressed) {
             button_a_pressed = false;
             if (number > MIN_NUMBER) {
                 number--;
@@ -93,8 +103,10 @@ int main() {
             display_number(number);
         }
 
+        sleep_ms(50);
+
         // Verifica se o botão B foi pressionado
-        if (button_b_pressed) {
+        if (button_b_pressed && !button_a_pressed) {
             button_b_pressed = false;
             if (number < MAX_NUMBER) {
                 number++;
