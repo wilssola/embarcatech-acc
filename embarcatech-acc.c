@@ -11,9 +11,6 @@
 
 volatile uint8_t led = MIN_LED;
 
-#define MIN_NUMBER 0
-#define MAX_NUMBER 9
-
 volatile uint8_t number = MIN_NUMBER;
 
 // Função para inicializar o LED RGB

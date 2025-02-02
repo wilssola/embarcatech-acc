@@ -54,6 +54,9 @@ void ws2812_clear() {
     }
 }
 
+#define MIN_NUMBER 0
+#define MAX_NUMBER 9
+
 // Função para exibir o número na matriz de LEDs WS2812
 void display_number(uint8_t num) {
     // Cores para cada número de 0 a 9
