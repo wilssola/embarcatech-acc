@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "author": "Wilson Oliveira Lima",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": 0, "left": 0, "attrs": {} },
+    {
+      "type": "wokwi-neopixel-matrix",
+      "id": "neopixels",
+      "top": -131,
+      "left": -188.66,
+      "rotate": 180,
+      "attrs": { "rows": "5", "cols": "5", "matrixLayout": "serpentine" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 211.1,
+      "left": -188.5,
+      "rotate": 90,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn2",
+      "top": 239.9,
+      "left": 128.3,
+      "rotate": 90,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-rgb-led",
+      "id": "rgb1",
+      "top": 273.6,
+      "left": -13.5,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 214.6,
+      "left": -125.65,
+      "rotate": 270,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r2",
+      "top": 214.6,
+      "left": -96.85,
+      "rotate": 270,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r3",
+      "top": 214.6,
+      "left": -68.05,
+      "rotate": 270,
+      "attrs": { "value": "1000" }
+    }
+  ],
+  "connections": [
+    [ "neopixels:DIN", "pico:GP7", "green", [ "v-9.6", "h-67.2", "v268.8", "h192", "v-25.55" ] ],
+    [ "neopixels:VCC", "pico:VBUS", "red", [ "v-19.2", "h182.4", "v166.45" ] ],
+    [ "neopixels:GND", "pico:GND.8", "black", [ "v-9.6", "h76.8", "v163.2", "h82.54" ] ],
+    [ "btn1:2.l", "pico:GND.1", "black", [ "v0" ] ],
+    [ "btn1:1.l", "pico:GP5", "green", [ "v0" ] ],
+    [ "btn2:2.l", "pico:GND.5", "black", [ "v0" ] ],
+    [ "btn2:1.l", "pico:GP6", "green", [ "v0" ] ],
+    [ "pico:GP11", "r3:2", "green", [ "h0" ] ],
+    [ "pico:GP12", "r2:2", "green", [ "h0" ] ],
+    [ "pico:GP13", "r1:2", "green", [ "h0" ] ],
+    [ "r2:1", "rgb1:G", "green", [ "h0", "v67.2" ] ],
+    [ "r3:1", "rgb1:R", "green", [ "h0", "v48" ] ],
+    [ "r1:1", "rgb1:B", "green", [ "h0", "v76.8" ] ],
+    [ "rgb1:COM", "pico:GND.4", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
